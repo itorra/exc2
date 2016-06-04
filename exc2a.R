@@ -1,0 +1,15 @@
+require(gtable)
+require(ggplot2)
+library(gtable)
+library(ggplot2)
+yem <- read.csv("phish.csv")
+head(yem)
+barplot(table(weekdays(as.Date(yem$Debut))),names.arg=c("Thu","Sun","Wed","Sat","Fri","Tue","Mon"))
+cover <- format(yem$Original.Artist)
+cover2 <- rep("Cover",length(cover))
+cover2[cover == "Phish                                         "] <- "Original"
+plot(as.numeric(format(as.Date(yem$Debut), "%Y")),as.numeric(format(as.Date(yem$Last.Seen), "%Y")), xlab="Debut Year", ylab="Last Seen Year",main="Songs Left Behind",pch=20,xlim=c(1983,2016),ylim=c(1983,2016), col=ifelse(cover2=="Original", rgb(100,0,0,60,maxColorValue=255),rgb(0,0,100,60,maxColorValue=255)), cex=3)
+legend("bottomright",legend =c("Original","Cover"),col=c(rgb(100,0,0,100,maxColorValue=255),rgb(0,0,100,100,maxColorValue=255)),pch=20)
+plot(yem$Times.Played,yem$Current.Gap,col=ifelse(cover2=="Original","red","blue"),pch=20,cex=1,main="The bust outs",xlab="Time played",ylab="Current gap")
+legend("topright",legend =c("Original","Cover"),col=c("red","blue"),pch=20)
+       
